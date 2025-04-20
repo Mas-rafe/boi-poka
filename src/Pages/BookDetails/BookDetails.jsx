@@ -1,14 +1,18 @@
 import React from 'react';
 
 import { useLoaderData, useParams } from 'react-router';
+import { addToStoredDB } from '../../Utility/addtoDb';
 
 const BookDetails = () => {
   const { id } = useParams();
   const bookId = parseInt(id);
   const data = useLoaderData();
   const singleBook = data.find((book) => book.bookId === bookId);
-  const { bookName, category, image, publisher,review, rating, totalPages, tags, yearOfPublishing } = singleBook;
+  const { bookName, category, image, publisher,review, rating, totalPages, tags, yearOfPublishing } = singleBook || {};
 
+  const handleMarkAsRead = id =>{
+        addToStoredDB(id);
+  }
   return (
     <div className='w-full flex mx-auto my-4 p-4 gap-4'>
       <img className='border-gray-400 w-64 bg-gray-300 p-10' src={image} alt="" />
@@ -30,14 +34,14 @@ const BookDetails = () => {
         <div className='border-t-1 border-dashed'></div>
         <div className='text-xs p-2'>
           
-          <p className='justify-between gap-2'>Number of Pages: <span className='font-bold'>{totalPages}</span> </p>
+          <p className=''>Number of Pages: <span className='font-bold'>{totalPages}</span> </p>
           <p>Publisher: <span className='font-bold'>{publisher}</span></p>
           <p>Year of Publishing: <span className='font-bold'>{yearOfPublishing}</span></p>
           <p>Rating: <span className='font-bold'>{rating}</span></p>
         </div>
 
 
-        <button className='btn rounded-xl bg-indigo-700 text-white m-2'>Read</button>
+        <button onClick={()=>handleMarkAsRead(id)} className='btn rounded-xl bg-indigo-700 text-white m-2'>Read</button>
         <button className='btn rounded-xl font-bold bg-amber-400 text-indigo-700 m-2'>Wishlist</button>
       </div>
     </div>

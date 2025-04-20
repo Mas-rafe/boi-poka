@@ -7,7 +7,9 @@ const Home = () => {
     const data = useLoaderData();
     return (
         <div className='my-8'>
+          
             <Banner></Banner>
+           
             <Books data={data}></Books>
         </div>
     );
